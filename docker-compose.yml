@@ -1,0 +1,11 @@
+services:
+  k6:
+    image: grafana/k6
+
+    ports:
+      - "6565:6565"
+    stdin_open: true
+    tty: true
+    working_dir: /scripts
+    volumes:
+      - ./scripts:/scripts

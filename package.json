@@ -4,5 +4,9 @@
   "main": "index.js",
   "repository": "git@github.com:sjoedwards/k6-demos.git",
   "author": "sjoedwards <samuel.j.o.edwards@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "k6": "docker-compose run k6",
+    "k6:run": "yarn k6 run"
+  }
 }
