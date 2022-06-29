@@ -2,15 +2,11 @@ version: '3.7'
 services:
   mongodb:
     image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
   server:
-    container_name: ts-node-docker-starter
     restart: always
     build:
       context: .
@@ -21,7 +17,7 @@ services:
       - MONGO_URI=mongodb://mongodb:27017/dab
       - JWT_KEY=key12345
     volumes:
-      - ./:/src
+      - .:/app
 
 volumes:
   mongodb_data_container:
