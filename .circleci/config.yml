@@ -4,9 +4,15 @@ orbs:
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
 workflows:
-  heroku_deploy:
-    jobs:
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
-          filters:
-            branches:
-              only: main
+    machine:
+        enabled: true
+    steps:
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+
+      - run:
+          command: |
+            git subtree push --prefix demos/run-logger heroku main
+            sleep 5 # sleep for 5 seconds to wait for dynos
+            heroku restart

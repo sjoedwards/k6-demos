@@ -10,5 +10,4 @@ TODO
 - [] Frontend
 - [] MongoDB deployed
 - [] Deployed on Heroku
-- [] Run simple integration test to warm dyno
 - [] CI load tests (circle)
