@@ -9,3 +9,7 @@
 ```
 $ yarn run k6:run {script name}
 ```
+
+# Starting the demo app
+
+Follow the separate [Readme](./demos/dab/README.md)!
