@@ -1,11 +1,11 @@
 services:
   k6:
     image: grafana/k6
-
-    ports:
-      - "6565:6565"
+    environment:
+      - BASE_URL=http://localhost:3001
+    network_mode: "host"
     stdin_open: true
     tty: true
     working_dir: /scripts
     volumes:
-      - ./scripts:/scripts
+      - ./k6-scripts:/scripts
