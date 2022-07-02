@@ -3,9 +3,10 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
-workflows:
+jobs:
+  deploy:
     machine:
-        enabled: true
+      enabled: true
     steps:
       - run:
           name: Setup Heroku
