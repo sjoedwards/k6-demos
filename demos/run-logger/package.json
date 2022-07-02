@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev src/index.ts "
+    "start": "ts-node-dev server/src/index.ts "
   },
   "dependencies": {
     "@sjoedwards/common": "^1.0.45",
