@@ -1,0 +1,8 @@
+{
+  "name": "k6-demos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:sjoedwards/k6-demos.git",
+  "author": "sjoedwards <samuel.j.o.edwards@gmail.com>",
+  "license": "MIT"
+}
