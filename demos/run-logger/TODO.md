@@ -4,9 +4,11 @@ TODO
 - [x] Start server
 - [x] Signup Successfully
 - [x] Signin successfully
-- [] Current user successfully
-- [] POST dab successfully
-- [] GET dabs successfully
+- [x] Current user successfully
+- [x] POST race successfully
+- [x] GET races successfully
 - [] Frontend
+- [] MongoDB deployed
 - [] Deployed on Heroku
+- [] Run simple integration test to warm dyno
 - [] CI load tests (circle)
