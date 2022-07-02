@@ -10,9 +10,17 @@ workflows:
       - run:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
-
       - run:
           command: |
             git subtree push --prefix demos/run-logger heroku main
             sleep 5 # sleep for 5 seconds to wait for dynos
             heroku restart
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: main
