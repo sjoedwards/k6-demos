@@ -30,7 +30,7 @@ router.post(
     });
 
     if (existingRace) {
-      throw new BadRequestError('Race already exists for current user');
+      throw new BadRequestError('Race already exists for current user ');
     }
 
     const race = Race.build({
