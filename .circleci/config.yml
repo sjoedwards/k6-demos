@@ -23,11 +23,11 @@ workflows:
   version: 2
   deploy-and-test:
     jobs:
-      - deploy:
-          filters:
-            branches:
-              only: main
+      # - deploy:
+      #     filters:
+      #       branches:
+      #         only: main
       - grafana/k6:
           script: k6-scripts/demos/run-logger/smoke.js
-          requires:
-            - deploy
+          # requires:
+          #   - deploy

@@ -21,6 +21,7 @@ export const options = {
 };
 
 const BASE_URL = __ENV.BASE_URL;
+console.log('🚀 ~ file: smoke.js ~ line 24 ~ BASE_URL', BASE_URL);
 const PASSWORD = 'test1234';
 
 export default () => {
