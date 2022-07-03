@@ -9,14 +9,14 @@ export const options = {
   thresholds: {
     // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 9 VU's (500/60 = 9)
     checks: ['rate>0.999'],
-    // 99.9% of Group request time will be less than 10 seconds.
-    // 99.5% of Group request time will be less than 5 seconds.
+    // 99% of Group request time will be less than 10 seconds.
+    // 95% of Group request time will be less than 5 seconds.
     'group_duration{group:::signInGetRacesPostRace}': [
-      'p(99.9) < 10000',
-      'p(99.5) < 5000',
+      'p(99) < 10000',
+      'p(95) < 5000',
     ],
-    // Extra: 99.5% individual requests should respond in less than 1 second
-    http_req_duration: ['p(99.5) < 1000'],
+    // Extra: 95% individual requests should respond in less than 1 second
+    http_req_duration: ['p(95) < 1000'],
   },
 };
 
