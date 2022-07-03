@@ -17,6 +17,7 @@ jobs:
             git subtree push --prefix demos/run-logger heroku main
             sleep 5 # sleep for 5 seconds to wait for dynos
             heroku restart
+            heroku ps:wait -a run-logger-demo
 
 
 workflows:
