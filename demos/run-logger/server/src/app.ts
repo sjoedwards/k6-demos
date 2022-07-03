@@ -12,7 +12,14 @@ const app = express();
 app.set('trust proxy', true);
 
 // Create the session
-app.use(cookieSession({ signed: false, secure: false, httpOnly: false }));
+app.use(
+  cookieSession({
+    name: 'session',
+    signed: false,
+    secure: false,
+    httpOnly: false,
+  })
+);
 
 // Parse the body
 app.use(json());

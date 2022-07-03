@@ -42,8 +42,6 @@ export default () => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Accept: '*/*',
-          'Accept-encoding': 'gzip, deflate, br',
         },
       }
     );
@@ -63,36 +61,18 @@ export default () => {
       time: 30,
     };
 
-    // Set up cookie jar
-    const vuJar = http.cookieJar();
-    const sessionCookie = vuJar.cookiesForURL(signUpRes.url);
-    const sessionCookieSignin = vuJar.cookiesForURL(signInRes.url);
-    console.log(
-      '🚀 ~ file: smoke.js ~ line 65 ~ sessionCookieSignin',
-      sessionCookieSignin
-    );
-    console.log('🚀 ~ file: smoke.js ~ line 64 ~ sessionCookie', sessionCookie);
-
     const postRaceRes = http.post(
       `${BASE_URL}/api/races`,
       JSON.stringify(race),
       {
         headers: { 'Content-Type': 'application/json' },
-        cookies: {
-          'express:sess': sessionCookie,
-        },
       }
     );
 
-    const getRacesRes = http.get(`${BASE_URL}/api/races/me`, {
-      cookies: {
-        'express:sess': sessionCookie,
-      },
-    });
+    const getRacesRes = http.get(`${BASE_URL}/api/races/me`);
 
     check(signUpRes, {
       signUpSuccess: (resp) => {
-        console.log('🚀 ~ file: smoke.js ~ line 89 ~ resp', resp);
         return resp.status === 201;
       },
     });
@@ -105,7 +85,7 @@ export default () => {
 
     check(postRaceRes, {
       postRaceSuccess: (resp) => {
-        return resp.status === 200;
+        return resp.status === 201;
       },
     });
 
