@@ -17,6 +17,15 @@ jobs:
             git subtree push --prefix demos/run-logger heroku main
             sleep 5 # sleep for 5 seconds to wait for dynos
             heroku restart
+  smoke_test:
+    requires:
+      - build-and-deploy
+    steps:
+        jobs:
+      - checkout
+      - grafana/k6:
+          script: k6-scripts/run-logger/smoke.js
+
 
 workflows:
   version: 2
@@ -28,8 +37,4 @@ workflows:
               only: main
   smoke_test:
     jobs:
-      - checkout
-      - grafana/k6:
-          requires:
-            - build-and-deploy
-          script: k6-scripts/run-logger/smoke.js
+      - smoke_test
