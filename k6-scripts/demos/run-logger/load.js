@@ -22,7 +22,7 @@ export const options = {
       // Use a maximum of 10 VUs to achieve the number of 'users' per minute
       maxVUs: 30,
       // Number of VU's we'll start with
-      preAllocatedVUs: 1,
+      preAllocatedVUs: 9,
     },
   },
   thresholds: {

@@ -18,23 +18,37 @@ jobs:
             sleep 5 # sleep for 5 seconds to wait for dynos
             heroku restart
             heroku ps:wait -a run-logger-demo
+  clear_db:
+    machine:
+      enabled: true
+    steps:
+      - checkout
+      - run:
+          command: |
+            yarn
+            yarn clear:db
+
 
 
 workflows:
   version: 2
   deploy-and-test:
     jobs:
-      - deploy:
-          filters:
-            branches:
-              only: main
-      - grafana/k6:
-          name: smoke_test
-          script: k6-scripts/demos/run-logger/smoke.js
-          requires:
-            - deploy
-      - grafana/k6:
-          name: load_test
-          script: k6-scripts/demos/run-logger/load.js
-          requires:
-            - smoke_test
+      # - deploy:
+      #     filters:
+      #       branches:
+      #         only: main
+      # - grafana/k6:
+      #     name: smoke_test
+      #     script: k6-scripts/demos/run-logger/smoke.js
+      #     requires:
+      #       - deploy
+      # - grafana/k6:
+      #     name: load_test
+      #     script: k6-scripts/demos/run-logger/load.js
+      #     requires:
+      #       - smoke_test
+      - clear_db
+      # - clear_db:
+      #     requires:
+      #       - load_test
