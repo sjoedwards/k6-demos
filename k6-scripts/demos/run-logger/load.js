@@ -3,10 +3,13 @@ import { check, group, sleep } from 'k6';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-  vus: 1, // 1 user looping for 30 seconds
+  vus: 1, // 1 user looping for 1 minute
   duration: '15s',
 
   thresholds: {
+    // move these into load
+    // http_req_duration: ['p(99)<1500'], // 99% of requests must complete below 1.5s
+    // 'group_duration{group:::signUp}': ['avg < 500'],
     checks: ['rate>0.99'],
   },
 };
@@ -33,14 +36,20 @@ export default () => {
 
     check(loginRes, {
       signUpSuccess: (resp) => {
+        console.log(resp.status);
+        console.log(resp.body);
         return resp.status === 201;
       },
     });
 
+    // const authHeaders = {
+    //   headers: {
+    //     Authorization: `Bearer ${loginRes.json('access')}`,
+    //   },
+    // };
+
+    // const myObjects = http.get(`${BASE_URL}/my/crocodiles/`, authHeaders).json();
+    // check(myObjects, { 'retrieved crocodiles': (obj) => obj.length > 0 });
     sleep(1);
   });
 };
-
-export function teardown(data) {
-  console.log(JSON.stringify(data));
-}

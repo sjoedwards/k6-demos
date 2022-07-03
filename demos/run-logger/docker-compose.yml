@@ -14,7 +14,7 @@ services:
     ports:
       - 3001:3001
     environment:
-      - MONGO_URI=mongodb://mongodb:27017/dab
+      - MONGO_URI=mongodb://mongodb:27017/test
       - JWT_KEY=key12345
     volumes:
       - .:/app

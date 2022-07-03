@@ -7,7 +7,8 @@ TODO
 - [x] Current user successfully
 - [x] POST race successfully
 - [x] GET races successfully
-- [] Frontend
-- [] MongoDB deployed
-- [] Deployed on Heroku
+- [x] MongoDB deployed
+- [x] Deployed on Heroku
+- [ ] Smoke against dev
 - [] CI load tests (circle)
+- [] Frontend
