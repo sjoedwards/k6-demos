@@ -22,9 +22,9 @@ jobs:
       - build-and-deploy
     steps:
         jobs:
-      - checkout
-      - grafana/k6:
-          script: k6-scripts/run-logger/smoke.js
+          - checkout
+          - grafana/k6:
+              script: k6-scripts/run-logger/smoke.js
 
 
 workflows:
