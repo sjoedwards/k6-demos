@@ -28,5 +28,8 @@ workflows:
               only: main
   smoke_test:
     jobs:
+      - checkout
       - grafana/k6:
+          requires:
+            - build-and-deploy
           script: k6-scripts/run-logger/smoke.js
