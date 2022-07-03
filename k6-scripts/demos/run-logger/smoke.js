@@ -20,7 +20,10 @@ export const options = {
   },
 };
 
-const BASE_URL = __ENV.BASE_URL.replace(/"/g, '');
+const BASE_URL =
+  __ENV.ENVIRONMENT === 'local'
+    ? 'http://localhost:3001'
+    : 'https://run-logger-demo.herokuapp.com';
 const PASSWORD = 'test1234';
 
 export default () => {

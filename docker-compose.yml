@@ -2,7 +2,7 @@ services:
   k6:
     image: grafana/k6
     environment:
-      - BASE_URL="http://localhost:3001"
+      - ENVIRONMENT=local
     network_mode: "host"
     stdin_open: true
     tty: true
