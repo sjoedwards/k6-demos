@@ -7,7 +7,7 @@ export const options = {
   duration: '15s',
 
   thresholds: {
-    // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 9 VU's (500/60 = 9)
+    // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx even at 300 'users' a minute
     checks: ['rate>0.999'],
     // 99% of Group request time will be less than 10 seconds.
     // 95% of Group request time will be less than 5 seconds.
