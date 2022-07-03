@@ -33,6 +33,6 @@ workflows:
           filters:
             branches:
               only: main
-      - smoke_test
+      - smoke_test:
           requires:
             - deploy
