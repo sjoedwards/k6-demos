@@ -26,14 +26,6 @@ const BASE_URL =
     : 'https://run-logger-demo.herokuapp.com';
 const PASSWORD = 'test1234';
 
-export function setup() {
-  http.get(`${BASE_URL}/api/users/signup`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-}
-
 export default () => {
   group('signInGetRacesPostRace', function () {
     const getRandomEmail = () => {
