@@ -101,7 +101,3 @@ export default () => {
     sleep(1);
   });
 };
-
-export function teardown(data) {
-  console.log(JSON.stringify(data));
-}

@@ -3,53 +3,120 @@ import { check, group, sleep } from 'k6';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-  vus: 1, // 1 user looping for 1 minute
-  duration: '15s',
-
+  // Ideally - this would be 5-20 minutes long, not 1
+  scenarios: {
+    signInGetRacesPostRace: {
+      executor: 'ramping-arrival-rate',
+      // Start with 0 'users'
+      startRate: 0,
+      // Time frame is a minute
+      timeUnit: '1m',
+      stages: [
+        // Ramp to 100 'users' per minute
+        { duration: '15s', target: 500 },
+        // Start at 100 'users' per minute for 30 seconds
+        { duration: '30s', target: 500 },
+        // Ramp to 0 'users' per minute
+        { duration: '20s', target: 0 },
+      ],
+      // Use a maximum of 10 VUs to achieve the number of 'users' per minute
+      maxVUs: 20,
+      // Number of VU's we'll start with
+      preAllocatedVUs: 1,
+    },
+  },
   thresholds: {
-    // move these into load
-    // http_req_duration: ['p(99)<1500'], // 99% of requests must complete below 1.5s
-    // 'group_duration{group:::signUp}': ['avg < 500'],
-    checks: ['rate>0.99'],
+    // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 9 VU's (500/60 = 9)
+    checks: ['rate>0.999'],
+    // 99.9% of Group request time will be less than 10 seconds.
+    // 99.5% of Group request time will be less than 5 seconds.
+    'group_duration{group:::signInGetRacesPostRace}': [
+      'p(99.9) < 10000',
+      'p(99.5) < 5000',
+    ],
+    // Extra: 99.5% individual requests should respond in less than 1 second
+    http_req_duration: ['p(99.5) < 1000'],
   },
 };
 
-const BASE_URL = __ENV.BASE_URL;
+const BASE_URL =
+  __ENV.ENVIRONMENT === 'local'
+    ? 'http://localhost:3001'
+    : 'https://run-logger-demo.herokuapp.com';
 const PASSWORD = 'test1234';
 
 export default () => {
-  group('signUp', function () {
+  group('signInGetRacesPostRace', function () {
     const getRandomEmail = () => {
       const randomStringOutput = randomString(10);
       const email = `${randomStringOutput}@test.com`;
       return email;
     };
 
-    const loginRes = http.post(
+    const randomEmail = getRandomEmail();
+
+    const signUpRes = http.post(
       `${BASE_URL}/api/users/signup`,
       JSON.stringify({
-        email: getRandomEmail(),
+        email: randomEmail,
+        password: PASSWORD,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const signInRes = http.post(
+      `${BASE_URL}/api/users/signin`,
+      JSON.stringify({
+        email: randomEmail,
         password: PASSWORD,
       }),
       { headers: { 'Content-Type': 'application/json' } }
     );
 
-    check(loginRes, {
+    const race = {
+      raceName: `${randomEmail}'s First Race`,
+      length: 3,
+      time: 30,
+    };
+
+    const postRaceRes = http.post(
+      `${BASE_URL}/api/races`,
+      JSON.stringify(race),
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+
+    const getRacesRes = http.get(`${BASE_URL}/api/races/me`);
+
+    check(signUpRes, {
       signUpSuccess: (resp) => {
-        console.log(resp.status);
-        console.log(resp.body);
         return resp.status === 201;
       },
     });
 
-    // const authHeaders = {
-    //   headers: {
-    //     Authorization: `Bearer ${loginRes.json('access')}`,
-    //   },
-    // };
+    check(signInRes, {
+      signInSuccess: (resp) => {
+        return resp.status === 200;
+      },
+    });
 
-    // const myObjects = http.get(`${BASE_URL}/my/crocodiles/`, authHeaders).json();
-    // check(myObjects, { 'retrieved crocodiles': (obj) => obj.length > 0 });
+    check(postRaceRes, {
+      postRaceSuccess: (resp) => {
+        return resp.status === 201;
+      },
+    });
+
+    check(getRacesRes, {
+      getRacesSuccess: (resp) => {
+        return resp.status === 200;
+      },
+    });
+
     sleep(1);
   });
 };

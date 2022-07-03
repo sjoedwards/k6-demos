@@ -8,7 +8,7 @@ SLA -> Agreement you make with your clients
 
 SLOs -> Objectives your team must make to meet that agreement
 
-1-4: 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 9 VU's (500/60 = 9)
+1-4: 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 500 customers per minute
 5. 99.9% of Group request time will be less than 10 seconds.
 5. 99.5% of Group request time will be less than 5 seconds.
 Extra: 99.5% requests should respond in less than 1 second
