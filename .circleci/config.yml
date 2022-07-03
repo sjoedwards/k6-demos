@@ -35,6 +35,6 @@ workflows:
             - deploy
       - grafana/k6:
           name: load_test
-          script: k6-scripts/demos/run-logger/smoke.js
+          script: k6-scripts/demos/run-logger/load.js
           requires:
             - smoke_test
