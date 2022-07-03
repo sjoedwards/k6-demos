@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
+  grafana: grafana/k6@1.1.3
 
 jobs:
   deploy:
@@ -26,3 +26,7 @@ workflows:
           filters:
             branches:
               only: main
+  smoke_test:
+    jobs:
+      - grafana/k6:
+          script: k6-scripts/run-logger/smoke.js
