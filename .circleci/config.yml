@@ -28,6 +28,6 @@ workflows:
             branches:
               only: main
       - grafana/k6:
-          script: k6-scripts/run-logger/smoke.js
+          script: k6-scripts/demos/run-logger/smoke.js
           requires:
             - deploy
