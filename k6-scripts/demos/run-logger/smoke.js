@@ -3,11 +3,20 @@ import { check, group, sleep } from 'k6';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export const options = {
-  vus: 1, // 1 user looping for 30 seconds
+  vus: 1, // 1 user looping for 15 seconds
   duration: '15s',
 
   thresholds: {
-    checks: ['rate>0.99'],
+    // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 9 VU's (500/60 = 9)
+    checks: ['rate>0.999'],
+    // 99.9% of Group request time will be less than 10 seconds.
+    // 99.5% of Group request time will be less than 5 seconds.
+    'group_duration{group:::signInGetRacesPostRace}': [
+      'p(99.9) < 10000',
+      'p(99.5) < 5000',
+    ],
+    // Extra: 99.5% individual requests should respond in less than 1 second
+    http_req_duration: ['p(99.5) < 1000'],
   },
 };
 
@@ -15,25 +24,94 @@ const BASE_URL = __ENV.BASE_URL;
 const PASSWORD = 'test1234';
 
 export default () => {
-  group('signUp', function () {
+  group('signInGetRacesPostRace', function () {
     const getRandomEmail = () => {
       const randomStringOutput = randomString(10);
       const email = `${randomStringOutput}@test.com`;
       return email;
     };
 
-    const loginRes = http.post(
+    const randomEmail = getRandomEmail();
+
+    const signUpRes = http.post(
       `${BASE_URL}/api/users/signup`,
       JSON.stringify({
-        email: getRandomEmail(),
+        email: randomEmail,
+        password: PASSWORD,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+          'Accept-encoding': 'gzip, deflate, br',
+        },
+      }
+    );
+
+    const signInRes = http.post(
+      `${BASE_URL}/api/users/signin`,
+      JSON.stringify({
+        email: randomEmail,
         password: PASSWORD,
       }),
       { headers: { 'Content-Type': 'application/json' } }
     );
 
-    check(loginRes, {
+    const race = {
+      raceName: `${randomEmail}'s First Race`,
+      length: 3,
+      time: 30,
+    };
+
+    // Set up cookie jar
+    const vuJar = http.cookieJar();
+    const sessionCookie = vuJar.cookiesForURL(signUpRes.url);
+    const sessionCookieSignin = vuJar.cookiesForURL(signInRes.url);
+    console.log(
+      '🚀 ~ file: smoke.js ~ line 65 ~ sessionCookieSignin',
+      sessionCookieSignin
+    );
+    console.log('🚀 ~ file: smoke.js ~ line 64 ~ sessionCookie', sessionCookie);
+
+    const postRaceRes = http.post(
+      `${BASE_URL}/api/races`,
+      JSON.stringify(race),
+      {
+        headers: { 'Content-Type': 'application/json' },
+        cookies: {
+          'express:sess': sessionCookie,
+        },
+      }
+    );
+
+    const getRacesRes = http.get(`${BASE_URL}/api/races/me`, {
+      cookies: {
+        'express:sess': sessionCookie,
+      },
+    });
+
+    check(signUpRes, {
       signUpSuccess: (resp) => {
+        console.log('🚀 ~ file: smoke.js ~ line 89 ~ resp', resp);
         return resp.status === 201;
+      },
+    });
+
+    check(signInRes, {
+      signInSuccess: (resp) => {
+        return resp.status === 200;
+      },
+    });
+
+    check(postRaceRes, {
+      postRaceSuccess: (resp) => {
+        return resp.status === 200;
+      },
+    });
+
+    check(getRacesRes, {
+      getRacesSuccess: (resp) => {
+        return resp.status === 200;
       },
     });
 
