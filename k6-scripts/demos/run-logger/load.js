@@ -10,14 +10,14 @@ export const options = {
       // Start with 0 'users'
       startVUs: 0,
       stages: [
+        // Ramp to 10 'users'
+        { duration: '15s', target: 10 },
+        // Stay at 10 'users' for 15 seconds
+        { duration: '15s', target: 10 },
         // Ramp to 25 'users'
-        { duration: '15s', target: 25 },
+        { duration: '15s', target: 20 },
         // Stay at 25 'users' for 15 seconds
-        { duration: '15s', target: 25 },
-        // Ramp to 50 'users'
-        { duration: '15s', target: 50 },
-        // Stay at 50 'users' for 15 seconds
-        { duration: '15s', target: 50 },
+        { duration: '15s', target: 20 },
         // Ramp down to 0 'users'
         { duration: '60s', target: 0 },
       ],
@@ -29,11 +29,11 @@ export const options = {
     // 99% of Group request time will be less than 10 seconds.
     // 95% of Group request time will be less than 5 seconds.
     'group_duration{group:::signInGetRacesPostRace}': [
-      'p(99) < 10000',
-      'p(95) < 5000',
+      'p(99) < 20000',
+      'p(95) < 10000',
     ],
-    // Extra: 95% individual requests should respond in less than 1 second
-    http_req_duration: ['p(95) < 1000'],
+    // Extra: 95% individual requests should respond in less than 2 second
+    http_req_duration: ['p(95) < 2000'],
   },
 };
 
