@@ -4,14 +4,14 @@ SLA -> Agreement you make with your clients
 2. Users must be able to get their user
 3. Users must be able to post and view their races
 4. The above must be true, regardless of how busy the service is. 20 concurrent customers
-5. The user must be able to go from signed out to viewing their races in reasonable time frame (less than 10 seconds)
+5. The user must be able to go from signed out to viewing their races in reasonable time frame (less than 20 seconds)
 
 SLOs -> Objectives your team must make to meet that agreement
 
 1-4: 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 20 concurrent customers
-5. 99% of time from sign up to viewing races will be less than 10 seconds.
-5. 95% of Group request time will be less than 5 seconds.
-Extra: 95% individual requests should respond in less than 1 second
+5. 99% of time from sign up to viewing races will be less than 20 seconds.
+5. 95% of Group request time will be less than 20 seconds.
+Extra: 95% individual requests should respond in less than 2 second
 
 SLIs -> the real numbers on your performance tests
 - Request time
