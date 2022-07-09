@@ -6,21 +6,23 @@ export const options = {
   // Ideally - this would be 5-20 minutes long, not 1
   scenarios: {
     signInGetRacesPostRace: {
-      executor: 'ramping-vus',
+      executor: 'ramping-arrival-rate',
       // Start with 0 'users'
-      startVUs: 0,
+      startRate: 0,
+      // Time frame is a minute
+      timeUnit: '1m',
       stages: [
-        // Ramp to 25 'users'
-        { duration: '15s', target: 25 },
-        // Stay at 25 'users' for 15 seconds
-        { duration: '15s', target: 25 },
-        // Ramp to 50 'users'
-        { duration: '15s', target: 50 },
-        // Stay at 50 'users' for 15 seconds
-        { duration: '15s', target: 50 },
-        // Ramp down to 0 'users'
-        { duration: '60s', target: 0 },
+        // Ramp to 300 'users' per minute
+        { duration: '15s', target: 300 },
+        // Keep at 300 'users' per minute for 30 seconds
+        { duration: '30s', target: 300 },
+        // Ramp to 0 'users' per minute
+        { duration: '20s', target: 0 },
       ],
+      // Use a maximum of 10 VUs to achieve the number of 'users' per minute
+      maxVUs: 30,
+      // Number of VU's we'll start with
+      preAllocatedVUs: 9,
     },
   },
   thresholds: {
