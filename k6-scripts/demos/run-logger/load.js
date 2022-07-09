@@ -24,15 +24,15 @@ export const options = {
     },
   },
   thresholds: {
-    // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at 300 'users' a minute
+    // 99.9% of Response status from signin/up, get user, get races, post race) must be 2xx, even at max concurrent 'users'
     checks: ['rate>0.999'],
     // 99% of Group request time will be less than 10 seconds.
-    // 95% of Group request time will be less than 5 seconds.
+    // 95% of Group request time will be less than 8 seconds.
     'group_duration{group:::signInGetRacesPostRace}': [
       'p(99) < 10000',
       'p(95) < 80000',
     ],
-    // Extra: 95% individual requests should respond in less than 2 second
+    // Extra: 95% individual requests should respond in less than 1.5 second
     http_req_duration: ['p(95) < 1500'],
   },
 };
@@ -114,7 +114,6 @@ export default () => {
         return resp.status === 200;
       },
     });
-
-    sleep(1);
   });
+  sleep(1);
 };
