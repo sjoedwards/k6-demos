@@ -14,9 +14,9 @@ export const options = {
         { duration: '15s', target: 5 },
         // Stay at 5 'users' for 15 seconds
         { duration: '15s', target: 5 },
-        // Ramp to 25 'users'
+        // Ramp to 10 'users'
         { duration: '15s', target: 10 },
-        // Stay at 25 'users' for 15 seconds
+        // Stay at 10 'users' for 15 seconds
         { duration: '15s', target: 10 },
         // Ramp down to 0 'users'
         { duration: '60s', target: 0 },
