@@ -34,11 +34,12 @@ jobs:
       - run:
           name: Execute smoke tests
           command: |
-            K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com
-            K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
-            K6_INFLUXDB_BUCKET=k6
-            K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN
-              k6 run k6-scripts/demos/run-logger/smoke.js
+            echo 'export K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com' >> $BASH_ENV
+            echo 'export K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com' >> $BASH_ENV
+            echo 'export K6_INFLUXDB_BUCKET=k6' >> $BASH_ENV
+            echo 'export K6_INFLUXDB_INSECURE=true' >> $BASH_ENV
+            echo 'export K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN' >> $BASH_ENV
+            k6 run k6-scripts/demos/run-logger/smoke.js
 
 
 
