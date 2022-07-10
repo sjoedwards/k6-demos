@@ -38,7 +38,7 @@ jobs:
             K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
             K6_INFLUXDB_BUCKET=k6
             K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN
-              k6 k6-scripts/demos/run-logger/smoke.js
+              k6 run k6-scripts/demos/run-logger/smoke.js
 
 
 
