@@ -3,13 +3,13 @@ services:
     build: .
     environment:
       - ENVIRONMENT=local
-      - K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com
-      - K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
+      - K6_OUT=xk6-influxdb=http://0.0.0.0:8086
+      - K6_INFLUXDB_ORGANIZATION=test
       - K6_INFLUXDB_BUCKET=k6
       - K6_INFLUXDB_INSECURE=true
         # NOTE: This is an Admin token, it's not suggested to use this configuration in production.
         # Instead, use a Token with restricted privileges.
-      - K6_INFLUXDB_TOKEN=Zbn4UHTvScqZvTVhgsInFQ-g9P4hTCE5CKVe-2-hYFdOrQyettusvAhqGp3t7OgIqDzazvActxehIDBUwgxhlw==
+      - K6_INFLUXDB_TOKEN=fvWb_ZrfVaWP4uWa1_Qv98u5_q2y4uuSig2Qrv_ReVl8gWOJpJfOt6RJP7ZEbJ3PvDKIVQWM4F94Llaac5380g==
     network_mode: "host"
     stdin_open: true
     tty: true
