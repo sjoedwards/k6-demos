@@ -67,4 +67,8 @@ workflows:
             branches:
               only: main
       - smoke_test
+          requires:
+            - deploy
       - load_test
+          requires:
+            - smoke_test
