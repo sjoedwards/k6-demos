@@ -7,3 +7,9 @@ datasources:
     database: k6
     url: http://influxdb:8086
     isDefault: true
+    secureJsonData:
+      token: fvWb_ZrfVaWP4uWa1_Qv98u5_q2y4uuSig2Qrv_ReVl8gWOJpJfOt6RJP7ZEbJ3PvDKIVQWM4F94Llaac5380g==
+    jsonData:
+      version: Flux
+      organization: test
+      defaultBucket: k6
