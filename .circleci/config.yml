@@ -28,11 +28,11 @@ jobs:
     docker:
       - image: sjoedwards1/k6-v2-influxdb
     environment:
-      K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com
-      K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
-      K6_INFLUXDB_BUCKET=k6
-      K6_INFLUXDB_INSECURE=true
-      K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN
+      - K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com
+      - K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
+      - K6_INFLUXDB_BUCKET=k6
+      - K6_INFLUXDB_INSECURE=true
+      - K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN
     steps:
       - checkout
       - setup_remote_docker:
