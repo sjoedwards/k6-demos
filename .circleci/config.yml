@@ -66,9 +66,12 @@ workflows:
           filters:
             branches:
               only: main
-      - smoke_test
+      - smoke_test:
           requires:
             - deploy
-      - load_test
+      - load_test:
           requires:
             - smoke_test
+      - clear_db:
+          requires:
+            - load_test
