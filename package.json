@@ -6,8 +6,10 @@
   "author": "sjoedwards <samuel.j.o.edwards@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "k6": "docker-compose run k6",
+    "k6": "docker-compose up -d && docker-compose run k6",
     "k6:run": "yarn k6 run",
+    "k6:run:smoke": "yarn run k6:run ./demos/run-logger/smoke.js",
+    "k6:run:load": "yarn run k6:run ./demos/run-logger/load.js",
     "clear:db": "node ./util/db-cleanup.js"
   },
   "devDependencies": {
