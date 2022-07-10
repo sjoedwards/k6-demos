@@ -1021,7 +1021,7 @@
           "tags": []
         }
       ],
-      "title": "$Measurement (p95)",
+      "title": "$Measurement (p99)",
       "type": "gauge"
     },
     {
