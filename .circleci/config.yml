@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  grafana: grafana/k6@1.1.3
-
 jobs:
   deploy:
     machine:
@@ -27,6 +24,21 @@ jobs:
           command: |
             yarn
             yarn clear:db
+  smoke_test:
+    docker:
+      - image: sjoedwards1/k6-v2-influxdb
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Execute smoke tests
+          command: |
+            K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com
+            K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
+            K6_INFLUXDB_BUCKET=k6
+            K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN
+              k6-scripts/demos/run-logger/smoke.js --out
 
 
 
@@ -34,20 +46,16 @@ workflows:
   version: 2
   deploy-and-test:
     jobs:
-      - deploy:
-          filters:
-            branches:
-              only: main
-      - grafana/k6:
-          name: smoke_test
-          script: k6-scripts/demos/run-logger/smoke.js
-          requires:
-            - deploy
-      - grafana/k6:
-          name: load_test
-          script: k6-scripts/demos/run-logger/load.js
-          requires:
-            - smoke_test
-      - clear_db:
-          requires:
-            - load_test
+      # - deploy:
+      #     filters:
+      #       branches:
+      #         only: main
+      - smoke_test
+      # - grafana/k6:
+      #     name: load_test
+      #     script: k6-scripts/demos/run-logger/load.js
+      #     requires:
+      #       - smoke_test
+      # - clear_db:
+      #     requires:
+      #       - load_test
