@@ -27,19 +27,19 @@ jobs:
   smoke_test:
     docker:
       - image: sjoedwards1/k6-v2-influxdb
+    environment:
+      K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com
+      K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com
+      K6_INFLUXDB_BUCKET=k6
+      K6_INFLUXDB_INSECURE=true
+      K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN
     steps:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
       - run:
           name: Execute smoke tests
-          command: |
-            echo 'export K6_OUT=xk6-influxdb=https://eu-central-1-1.aws.cloud2.influxdata.com' >> $BASH_ENV
-            echo 'export K6_INFLUXDB_ORGANIZATION=samuel.j.o.edwards@gmail.com' >> $BASH_ENV
-            echo 'export K6_INFLUXDB_BUCKET=k6' >> $BASH_ENV
-            echo 'export K6_INFLUXDB_INSECURE=true' >> $BASH_ENV
-            echo 'export K6_INFLUXDB_TOKEN=$INFLUXDB_TOKEN' >> $BASH_ENV
-            k6 run k6-scripts/demos/run-logger/smoke.js
+          command: k6 run k6-scripts/demos/run-logger/smoke.js
 
 
 

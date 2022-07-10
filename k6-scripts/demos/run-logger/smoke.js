@@ -20,7 +20,6 @@ export const options = {
   },
 };
 
-console.log('******ENVIRONEMNT******', __ENV.K6_INFLUXDB_ORGANIZATION);
 const BASE_URL =
   __ENV.ENVIRONMENT === 'local'
     ? 'http://localhost:3001'
