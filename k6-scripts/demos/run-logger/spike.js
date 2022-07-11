@@ -7,6 +7,7 @@ export const options = {
   scenarios: {
     signInGetRacesPostRace: {
       executor: 'ramping-vus',
+      gracefulRampDown: '360s',
       // Start with 0 'users'
       startVUs: 0,
       stages: [
@@ -15,7 +16,7 @@ export const options = {
         { duration: '10s', target: 1000 },
         { duration: '10s', target: 1000 },
         { duration: '10s', target: 5 },
-        { duration: '60s', target: 5 },
+        { duration: '360s', target: 5 },
         { duration: '10s', target: 0 },
       ],
     },
