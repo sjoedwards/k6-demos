@@ -27,7 +27,7 @@
   "gnetId": 2587,
   "graphTooltip": 2,
   "id": 1,
-  "iteration": 1657527419705,
+  "iteration": 1657527620391,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -260,7 +260,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Requests per Second",
+      "title": "Requests",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -380,7 +380,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Errors Per Second",
+      "title": "Errors",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -527,7 +527,7 @@
           "tags": []
         }
       ],
-      "title": "Checks Per Second",
+      "title": "Checks",
       "type": "timeseries"
     },
     {
@@ -1318,7 +1318,7 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
@@ -1384,7 +1384,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
