@@ -10,6 +10,8 @@
     "k6:run": "yarn k6 run",
     "k6:run:smoke": "yarn run k6:run ./demos/run-logger/smoke.js",
     "k6:run:load": "yarn run k6:run ./demos/run-logger/load.js",
+    "k6:run:stress": "yarn run k6:run ./demos/run-logger/stress.js",
+    "k6:run:spike": "yarn run k6:run ./demos/run-logger/spike.js",
     "clear:db": "node ./util/db-cleanup.js"
   },
   "devDependencies": {
